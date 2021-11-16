@@ -33,10 +33,11 @@ func main() {
 	r.GET("/", func(c *gin.Context) {
 		c.FileFromFS("main.html", public.AssetFile()) // https://github.com/gin-gonic/gin/issues/2654
 	})
-	r.Use(gincache.New(memoryCache, func(c *gin.Context) (key string, ttl time.Duration, err error) {
+	api := r.Group("/api/")
+	api.Use(gincache.New(memoryCache, func(c *gin.Context) (key string, ttl time.Duration, err error) {
 		return "ticker", config.CacheTTL, nil
 	}))
-	r.GET("/portfolio.json", func(c *gin.Context) {
+	api.GET("/portfolio.json", func(c *gin.Context) {
 		ctx, cancel := context.WithTimeout(c.Request.Context(), 10*time.Second)
 		defer cancel()
 		positions, err1 := models.GetPositions(ctx, config.AccountID)

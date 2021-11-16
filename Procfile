@@ -1,1 +1,2 @@
-web: go run main.go
+frontend: npx vue-cli-service serve
+backend: go run main.go

@@ -1,3 +1,3 @@
-package public
+package assets
 
 // do not remove
