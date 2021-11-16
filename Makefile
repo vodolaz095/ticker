@@ -19,6 +19,7 @@ deps:
 
 build_prod: frontend assets_prod
 	go build -o build/ticker main.go
+	upx build/ticker
 	forego run build/ticker
 
 assets_dev:

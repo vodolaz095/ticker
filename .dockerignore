@@ -1,0 +1,14 @@
+# editor settings
+.idea/
+
+build/
+Dockerfile
+
+# coverage
+cover.out
+
+# npm modules
+node_modules/
+
+# credentials
+.env
