@@ -2,9 +2,10 @@ package models
 
 import (
 	"context"
-	"github.com/TinkoffCreditSystems/invest-openapi-go-sdk"
 	"log"
 	"time"
+
+	"github.com/TinkoffCreditSystems/invest-openapi-go-sdk"
 )
 
 var client *sdk.RestClient

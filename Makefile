@@ -17,13 +17,17 @@ deps:
 	go mod verify
 	go mod tidy
 
+build_prod: frontend assets_prod
+	go build -o build/ticker main.go
+	forego run build/ticker
+
 assets_dev:
 	rm -f public/public.go
 	go-bindata -debug -o public/public.go -prefix "public/" -pkg public -fs public/
 
 assets_prod:
 	rm -f public/public.go
-	go-bindata -o public/public.go -prefix "public/" -pkg public -fs public/
+	go-bindata -o public/public.go -prefix "public/" -pkg public -fs public/css public/js public/
 
 start: assets_dev
 	forego start
