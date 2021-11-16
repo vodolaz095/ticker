@@ -1,14 +1,17 @@
 <template>
-  <HelloWorld title="ticker title" body="ticker body"/>
+  <positions></positions>
+  <currencies></currencies>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import currencies from './components/currencies.vue';
+import positions from './components/positions.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    currencies,
+    positions,
   }
 }
 </script>
