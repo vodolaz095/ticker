@@ -20,7 +20,9 @@ function upd() {
           store.setPositions(resp.body.positions);
           store.setCurrencies(resp.body.currencies);
           store.setTimestamp(new Date(1000*resp.body.timestamp));
+          return Promise.resolve();
         }
+        throw new Error(`wrong status code ${resp.statusCode}`);
       });
 }
 
