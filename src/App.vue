@@ -5,53 +5,24 @@
 </template>
 
 <script>
-import {reactive} from 'vue';
 import currencies from './components/currencies.vue';
 import positions from './components/positions.vue';
 import clock from './components/clock.vue';
+import doGet from './lib/http.js';
+import store from './lib/store.js';
+
 let t;
 
-function doGet(url) {
-  return new Promise(function (resolve, reject) {
-    const r = new XMLHttpRequest();
-    r.onreadystatechange = function () {
-      if (r.readyState === 4) {
-        if (r.status > 204) {
-          return reject(new Error(`wrong status code ${r.status}`));
+function upd() {
+  return doGet('/api/portfolio.json')
+      .then(function (resp) {
+        if (resp.statusCode === 200) {
+          store.setPositions(resp.body.positions);
+          store.setCurrencies(resp.body.currencies);
+          store.setTimestamp(new Date(1000*resp.body.timestamp));
         }
-        let body;
-        try {
-          body = JSON.parse(r.responseText);
-        } catch (err) {
-          body = r.responseText;
-        }
-        resolve({
-          statusCode: r.status,
-          body
-        });
-      }
-    };
-    r.open('GET', url, true);
-    r.send(null);
-  });
+      });
 }
-
-const store = {
-  state: reactive({
-    timestamp: new Date(),
-    positions: [],
-    currencies: [],
-  }),
-  setPositions(newValue) {
-    this.state.positions = newValue;
-  },
-  setCurrencies(newValue) {
-    this.state.currencies = newValue;
-  },
-  setTimestamp(newValue) {
-    this.state.timestamp = newValue;
-  }
-};
 
 export default {
   name: 'App',
@@ -70,16 +41,7 @@ export default {
     clearInterval(t);
   },
   mounted: function () {
-    function upd() {
-      return doGet('/api/portfolio.json')
-          .then(function (resp) {
-            if (resp.statusCode === 200) {
-              store.setPositions(resp.body.positions);
-              store.setCurrencies(resp.body.currencies);
-              store.setTimestamp(new Date(1000*resp.body.timestamp));
-            }
-          });
-    }
+    upd();
     t = setInterval(function () {
       upd().catch(function (err) {
         console.error(err);
