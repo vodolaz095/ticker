@@ -10,6 +10,7 @@ module.exports = {
   outputDir: path.join(__dirname, 'public'),
   publicPath: '/public/',
   indexPath: 'main.html',
+  integrity: true,
   devServer: {
     proxy: 'http://localhost:3100'
   }
