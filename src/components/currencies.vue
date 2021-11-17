@@ -17,27 +17,7 @@
 <script>
 export default {
   name: 'currencies',
-  data: function () {
-    return {
-      currencies: [
-        {
-          currency: 'EUR',
-          balance: 0,
-          blocked: 0
-        },
-        {
-          currency: 'RUB',
-          balance: 4.5,
-          blocked: 0
-        },
-        {
-          currency: 'USD',
-          balance: 0.83,
-          blocked: 0
-        }
-      ]
-    }
-  }
+  props: {'currencies':Array}
 }
 </script>
 

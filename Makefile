@@ -2,6 +2,7 @@ lint:
 	gofmt  -w=true -s=true -l=true ./
 	golint ./...
 	go vet ./...
+	npm run-script lint
 
 frontend:
 	npx vue-cli-service build
