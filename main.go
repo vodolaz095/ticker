@@ -34,6 +34,10 @@ func main() {
 		c.FileFromFS("main.html", public.AssetFile()) // https://github.com/gin-gonic/gin/issues/2654
 	})
 	api := r.Group("/api/")
+	api.Use(func(c *gin.Context) {
+		c.Header("Cache-Control", "public, max-age=10, must-revalidate")
+		c.Next()
+	})
 	api.Use(gincache.New(memoryCache, func(c *gin.Context) (key string, ttl time.Duration, err error) {
 		return "ticker", config.CacheTTL, nil
 	}))
