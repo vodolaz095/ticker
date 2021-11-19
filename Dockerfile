@@ -14,7 +14,7 @@ COPY babel.config.js /app/babel.config.js
 COPY vue.config.js /app/vue.config.js
 COPY src/ /app/src/
 # building vuejs source code
-RUN	npx vue-cli-service build
+RUN npx vue-cli-service build
 RUN ls -l /app/public/
 
 # preparing sane docker image to build app
@@ -36,18 +36,23 @@ COPY --from=frontend /app/public/ /opt/ticker/public
 RUN cp /opt/ticker/src/assets/favicon.ico /opt/ticker/public/
 RUN cp /opt/ticker/src/assets/fix.go /opt/ticker/public/
 RUN cp /opt/ticker/src/assets/robots.txt /opt/ticker/public/
-
 # build production grade binary
-RUN	make deps
-RUN	go build -o build/ticker main.go
-RUN	upx build/ticker
+RUN make deps
+# embedd assets in golang application using go-bindata
+RUN make assets_prod
+# compile application
+RUN go build -o build/ticker main.go
+# compress it
+RUN upx build/ticker
 RUN ls -l /opt/ticker/build/
 
-# build Alpine image with production grade binary inside
+# build small (~10 mb size) docker/podman compatible image with production grade binary inside
 FROM scratch
+# inject certs
 COPY --from=alpine /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+# inject shared libraries
 COPY --from=alpine /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
+# inject binary
 COPY --from=build /opt/ticker/build/ticker /bin/ticker
-
 EXPOSE 3000
 ENTRYPOINT ["/bin/ticker"]
