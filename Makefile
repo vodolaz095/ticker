@@ -33,3 +33,11 @@ assets_prod:
 
 start: assets_dev
 	forego start
+
+podman_build:
+	podman build -t localhost/ticker:latest .
+
+podman_start: podman_build
+	podman run --env-file=.env -p 3000:3000/tcp localhost/ticker:latest
+
+
