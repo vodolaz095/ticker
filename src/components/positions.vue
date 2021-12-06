@@ -7,9 +7,11 @@
       <th>Тип</th>
       <th>Название</th>
       <th>Лоты</th>
-      <th>Цена лота</th>
-      <th>Стоимость</th>
+      <th title="Средняя цена покупки позиции" >Стоимость</th>
+      <th title="Текущая цена позиции на рынке" >Рыночная цена</th>
+      <th title="Сколько денег можно получить, продав позицию сейчас">Цена продажи</th>
       <th>Доход</th>
+      <th>%</th>
     </tr>
     </thead>
     <tbody>
@@ -33,7 +35,13 @@
       <td>
         {{
           new Intl.NumberFormat('ru-RU', {style: 'currency', currency: position.averagePositionPrice.currency})
-              .format(position.balance * position.averagePositionPrice.value)
+              .format(position.averagePositionPrice.value+position.expectedYield.value/position.balance)
+        }}
+      </td>
+      <td>
+        {{
+          new Intl.NumberFormat('ru-RU', {style: 'currency', currency: position.averagePositionPrice.currency})
+              .format(position.balance * position.averagePositionPrice.value+position.expectedYield.value)
         }}
       </td>
       <td v-bind:class="{
@@ -43,6 +51,15 @@
         {{
           new Intl.NumberFormat('ru-RU', {style: 'currency', currency: position.averagePositionPrice.currency})
               .format(position.expectedYield.value)
+        }}
+      </td>
+      <td v-bind:class="{
+        profit: parseFloat(position.expectedYield.value, 10) >= 0,
+        loss: parseFloat(position.expectedYield.value, 10) < 0
+      }">
+        {{
+          new Intl.NumberFormat('ru-RU', {style: 'currency', currency: position.averagePositionPrice.currency})
+              .format(100 * position.expectedYield.value / (position.balance * position.averagePositionPrice.value))
         }}
       </td>
     </tr>

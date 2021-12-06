@@ -3,6 +3,7 @@ package models
 import (
 	"context"
 	"log"
+	"sort"
 	"time"
 
 	"github.com/TinkoffCreditSystems/invest-openapi-go-sdk"
@@ -29,7 +30,14 @@ func Connect(token string) (err error) {
 // GetPositions gets positions
 func GetPositions(ctx context.Context, accountID string) (positions []sdk.PositionBalance, err error) {
 	log.Println("Getting positions...")
-	return client.PositionsPortfolio(ctx, accountID)
+	positions, err = client.PositionsPortfolio(ctx, accountID)
+	if err != nil {
+		return
+	}
+	sort.Slice(positions, func(i, j int) bool {
+		return positions[i].Name < positions[j].Name
+	})
+	return
 }
 
 // GetCurrencies gets currencies
