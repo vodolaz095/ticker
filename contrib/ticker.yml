@@ -3,10 +3,29 @@ version: '3.7'
 # https://docs.docker.com/compose/compose-file/
 
 services:
+  traefik:
+    image: traefik:v1.7-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8084:8080"
+    networks:
+      - ticker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/traefik/traefik.toml:/traefik.toml
+      - /etc/traefik/acme.json:/acme.json
+      - traefikTemp:/tmp
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.hostname == holod]
+
   ticker:
     image: reg.vodolaz095.life/ticker:latest
     networks:
-      - oldcity
+      - ticker
     environment:
       ADDR: 0.0.0.0
       PORT: 3000
@@ -19,14 +38,14 @@ services:
         constraints: [node.hostname == holod]
       labels:
         - "traefik.enable=true"
-        - "traefik.docker.network=oldcity"
-        - "traefik.basic.frontend.rule=Host:ticker.vodolaz095.life"
+        - "traefik.docker.network=ticker"
+        - "traefik.basic.frontend.rule=Host:ticker.example.org"
         - "traefik.basic.port=3000"
         - "traefik.basic.protocol=http"
 
 networks:
-  oldcity:
+  ticker:
     driver: overlay
-    external: true
+
 
 
