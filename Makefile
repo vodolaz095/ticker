@@ -13,11 +13,13 @@ frontend:
 check: lint
 	go test -v ./...
 
+npm:
+	npm ci
+
 deps:
 	go mod download
 	go mod verify
 	go mod tidy
-	npm ci
 
 build_prod: deps frontend assets_prod
 	go build -o build/ticker main.go
