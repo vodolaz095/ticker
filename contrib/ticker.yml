@@ -27,4 +27,6 @@ services:
 networks:
   oldcity:
     driver: overlay
+    external: true
+
 
