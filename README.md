@@ -22,7 +22,6 @@ These packages are required in order to build application
 5. GNU Make (>=4.3)
 6. [Forego](https://github.com/ddollar/forego) - Optional dependency to start application loading environment from .env file 
 
-
 How to build executable 
 ===================================
 
@@ -59,6 +58,8 @@ This parameters are taken in account/учитываются эти параме�
 - TOKEN - nj
 - ACCOUNT_ID, "")
 
+Docker swarm service definition
+=====================================
 
 
 

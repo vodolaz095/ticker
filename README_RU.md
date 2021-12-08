@@ -44,7 +44,7 @@ $ make build
 Образ сохранится как localhost/ticker:latest в локальном хранилище.
 
 
-Configuration parameters/настройки приложения
+Настройки приложения
 ====================================
 Данный продукт соответствует манифесту 
 [12 факторных приложений](https://12factor.net/ru/config), и загружает параметры конфигурации из окружения программы.
@@ -56,3 +56,5 @@ Configuration parameters/настройки приложения
 - TOKEN - нет значения по умолчанию, токен можно получить по этой инструкции [https://tinkoffcreditsystems.github.io/invest-openapi/auth/](https://tinkoffcreditsystems.github.io/invest-openapi/auth/)
 - ACCOUNT_ID - номер аккаунта, для которого отображается информация.
 
+Файл для сервиса docker swarm
+=====================================
