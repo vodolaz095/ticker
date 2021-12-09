@@ -1,6 +1,7 @@
 # editor settings
 .idea/
 
+contrib/
 build/
 Dockerfile
 
