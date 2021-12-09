@@ -42,7 +42,18 @@ func main() {
 		return "ticker", config.CacheTTL, nil
 	}))
 	api.GET("/portfolio.json", func(c *gin.Context) {
+		var title string
 		ctx, cancel := context.WithTimeout(c.Request.Context(), 10*time.Second)
+		if config.Title != "" {
+			title = config.Title
+		} else {
+			if config.AccountID != "" {
+				title = fmt.Sprintf("Инвестиционный портфель %s", config.AccountID)
+			} else {
+				title = "Инвестиционный портфель"
+			}
+		}
+
 		defer cancel()
 		positions, err1 := models.GetPositions(ctx, config.AccountID)
 		if err1 != nil {
@@ -55,6 +66,7 @@ func main() {
 		now := time.Now()
 		c.JSON(http.StatusOK, gin.H{
 			"now":        now.Format(time.Stamp),
+			"title":      title,
 			"timestamp":  now.Unix(),
 			"positions":  positions,
 			"currencies": currencies,

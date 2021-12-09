@@ -29,6 +29,7 @@ services:
     environment:
       ADDR: 0.0.0.0
       PORT: 3000
+      TITLE: "Мамкин инвестор"
       TOKEN: SECRET
       ACCOUNT_ID: SECRET
     deploy:

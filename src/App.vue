@@ -1,7 +1,9 @@
 <template>
+  <h1>{{ title }}</h1>
   <clock :key="timestamp" :timestamp="timestamp"></clock>
   <positions :key="timestamp" :positions="positions"></positions>
   <currencies :key="timestamp" :currencies="currencies"></currencies>
+  <p>&copy; 2021 <a href="https://github.com/vodolaz095/ticker/">https://github.com/vodolaz095/ticker</a>. Все права защищены.</p>
 </template>
 
 <script>
@@ -17,6 +19,7 @@ function upd() {
   return doGet('/api/portfolio.json')
       .then(function (resp) {
         if (resp.statusCode === 200) {
+          store.setTitle(resp.body.title);
           store.setPositions(resp.body.positions);
           store.setCurrencies(resp.body.currencies);
           store.setTimestamp(new Date(1000*resp.body.timestamp));

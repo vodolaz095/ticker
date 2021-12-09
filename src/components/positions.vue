@@ -1,5 +1,5 @@
 <template>
-  <h1>Позиции</h1>
+  <h2>Позиции</h2>
   <table>
     <thead>
     <tr>

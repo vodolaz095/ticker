@@ -20,6 +20,9 @@ var AccountID string
 //CacheTTL shows duration for caching
 const CacheTTL = time.Minute
 
+// Title depicts application title
+var Title = ""
+
 func loadFromEnv(name, def string) string {
 	if os.Getenv(name) != "" {
 		return os.Getenv(name)
@@ -32,4 +35,5 @@ func init() {
 	Port = loadFromEnv("PORT", "3000")
 	Token = loadFromEnv("TOKEN", "")
 	AccountID = loadFromEnv("ACCOUNT_ID", "")
+	Title = loadFromEnv("TITLE", "")
 }
