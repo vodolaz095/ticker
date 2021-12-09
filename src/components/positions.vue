@@ -58,8 +58,8 @@
         loss: parseFloat(position.expectedYield.value, 10) < 0
       }">
         {{
-          new Intl.NumberFormat('ru-RU', {style: 'currency', currency: position.averagePositionPrice.currency})
-              .format(100 * position.expectedYield.value / (position.balance * position.averagePositionPrice.value))
+          Number(position.expectedYield.value / (position.balance * position.averagePositionPrice.value))
+              .toLocaleString('ru-RU',{style: 'percent', minimumFractionDigits:2})
         }}
       </td>
     </tr>

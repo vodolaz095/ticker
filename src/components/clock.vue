@@ -1,7 +1,7 @@
 <template>
   <div id="clock">
-    <p>Текущее время: {{now}}</p>
-    <p>Актуальность: {{ts}}</p>
+    <p>Текущее время: {{now.toLocaleTimeString('ru-RU')}}</p>
+    <p>Актуальность: {{new Date(ts).toLocaleTimeString('ru-RU')}}</p>
   </div>
 </template>
 

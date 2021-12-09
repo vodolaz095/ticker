@@ -3,7 +3,7 @@ Ticker
 Информер для Тинькофф Инвестиций.
 
 Тестовое задание на знание [VueJS 3x](https://v3.vuejs.org), 
-вэб-фреймворка [Gin](github.com/gin-gonic/gin) и официальной библиотеки для 
+вэб-фреймворка [Gin](https://github.com/gin-gonic/gin) и официальной библиотеки для 
 [Тиньков Инвестиций](https://tinkoffcreditsystems.github.io/invest-openapi/).
 Просто отображает таблицу с данными по позициям в инвестиционном портфеле.
 
